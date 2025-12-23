@@ -58,7 +58,7 @@ body {
   text-align: center;
   animation: fadeUp 0.9s ease forwards;
   position: relative;
-  z-index: 1;
+  z-index: 2; /* Sits above lyrics */
 }
 
 @keyframes fadeUp {
@@ -91,7 +91,7 @@ h1 {
   margin-bottom: 24px;
 }
 
-/* Music Player */
+/* --- Music Player --- */
 .music-player {
   display: flex;
   align-items: center;
@@ -161,7 +161,7 @@ h1 {
   animation: none;
 }
 
-/* Visualizer Animation when playing */
+/* Visualizer Animation */
 .music-player.playing .visualizer span {
   animation: bounce 0.6s ease infinite alternate;
 }
@@ -175,8 +175,7 @@ h1 {
   100% { height: 16px; opacity: 1; }
 }
 
-
-/* Links */
+/* --- Links --- */
 .links {
   display: flex;
   flex-direction: column;
@@ -198,7 +197,6 @@ h1 {
   transform: translateY(10px);
   opacity: 0;
   animation: linkIn 0.6s ease forwards;
-  /* Use the variable for delay */
   animation-delay: calc(0.06s * var(--i));
 }
 
@@ -225,9 +223,61 @@ h1 {
   transition: transform 0.15s ease;
 }
 
-/* Footer */
+/* --- Footer --- */
 footer {
   margin-top: 30px;
   font-size: 12px;
   opacity: 0.45;
+}
+
+/* --- Flying Lyric Layer --- */
+#lyric-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Allows clicking links behind text */
+  z-index: 1; /* Behind container, front of bg */
+  overflow: hidden;
+}
+
+.flying-lyric {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.15); /* Ghostly white */
+  font-size: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+  text-shadow: 0 0 15px rgba(124, 108, 255, 0.5); /* Purple glow */
+  animation: lyricPopFloat 5s ease-out forwards;
+}
+
+@keyframes lyricPopFloat {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(40px) rotate(-2deg);
+    filter: blur(10px);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1.1) translateY(0) rotate(0deg);
+    filter: blur(0px);
+  }
+  20% {
+    transform: scale(1);
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.1);
+    filter: blur(8px);
+  }
+}
+
+@media (max-width: 600px) {
+  .flying-lyric {
+    font-size: 1.1rem;
+  }
 }
