@@ -1,2 +1,2 @@
-# app.colinlee.me
+# socials.colinlee.me
 First Web App
