@@ -6,28 +6,20 @@
 
   <title>Colin Lee | Socials</title>
 
-  <!-- OpenGraph -->
   <meta property="og:title" content="Colin Lee" />
-  <meta property="og:description" content="Building, creating, and sharing online." />
+  <meta property="og:description" content="Student & Developer based in Baton Rouge." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://socials.colinlee.me" />
   <meta property="og:image" content="https://socials.colinlee.me/preview-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Colin Lee Social Links Preview" />
 
-  <!-- Analytics (GoatCounter) -->
   <script data-goatcounter="https://colinlee.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 
-  <!-- Favicon -->
- <link rel="icon" href="favicon.png" type="image/png" />
-
+  <link rel="icon" href="favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Floating background particles -->
   <div class="particles"></div>
 
   <div class="container">
@@ -35,48 +27,109 @@
     <div class="initials">CL</div>
 
     <h1>Colin Lee</h1>
-    <p class="bio">Building, creating, and sharing online.</p>
+    <p class="bio">Student & Developer based in Baton Rouge.</p>
+
+    <div class="music-player" id="musicPlayer">
+        <div class="play-icon" id="playBtn">
+            <svg id="playIcon" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            <svg id="pauseIcon" viewBox="0 0 24 24" width="24" height="24" style="display:none;"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </div>
+        <div class="track-info">
+            <span class="track-name">Ribs</span>
+            <span class="artist-name">Lorde</span>
+        </div>
+        <div class="visualizer">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <audio id="audioTrack" src="ribs.mp3" loop></audio>
+    </div>
 
     <div class="links">
-      <a class="link" href="https://colinlee.me" target="_blank" rel="noopener">
-        <img src="website.svg" alt="Website Icon"> Website
+      <a class="link" href="https://colinlee.me" target="_blank" rel="noopener" style="--i: 1">
+        <img src="website.svg" alt="Website"> Website
       </a>
 
-      <a class="link" href="https://instagram.com/colinlee.05" target="_blank" rel="noopener">
-        <img src="instagram.svg" alt="Instagram Icon"> Instagram
+      <a class="link" href="https://instagram.com/colinlee.05" target="_blank" rel="noopener" style="--i: 2">
+        <img src="instagram.svg" alt="Instagram"> Instagram
       </a>
 
-      <a class="link" href="https://youtube.com/@colinlee05" target="_blank" rel="noopener">
-        <img src="youtube.svg" alt="YouTube Icon"> YouTube
+      <a class="link" href="https://www.threads.net/@colinlee.05" target="_blank" rel="noopener" style="--i: 3">
+        <img src="threads.svg" alt="Threads"> Threads
       </a>
 
-      <a class="link" href="https://tiktok.com/@colinlee.05" target="_blank" rel="noopener">
-        <img src="tiktok.svg" alt="TikTok Icon"> TikTok
+      <a class="link" href="#" onclick="copyDiscord(event)" style="--i: 4">
+        <img src="discord.svg" alt="Discord"> Discord (wtfzeon)
       </a>
 
-      <a class="link" href="https://x.com/colinlee05" target="_blank" rel="noopener">
-        <img src="x.svg" alt="X Icon"> X (Twitter)
+      <a class="link" href="https://youtube.com/@colinlee05" target="_blank" rel="noopener" style="--i: 5">
+        <img src="youtube.svg" alt="YouTube"> YouTube
       </a>
 
-      <a class="link" href="https://github.com/colinlee05" target="_blank" rel="noopener">
-        <img src="github.svg" alt="GitHub Icon"> GitHub
+      <a class="link" href="https://tiktok.com/@colinlee.05" target="_blank" rel="noopener" style="--i: 6">
+        <img src="tiktok.svg" alt="TikTok"> TikTok
       </a>
 
-      <a class="link" href="https://linkedin.com/in/colinlee05" target="_blank" rel="noopener">
-        <img src="linkedin.svg" alt="LinkedIn Icon"> LinkedIn
+      <a class="link" href="https://x.com/colinlee05" target="_blank" rel="noopener" style="--i: 7">
+        <img src="x.svg" alt="X"> X (Twitter)
       </a>
 
-      <a class="link" href="https://www.snapchat.com/add/colinlee-05" target="_blank" rel="noopener">
-        <img src="snapchat.svg" alt="Snapchat Icon"> Snapchat
+      <a class="link" href="https://github.com/colinlee05" target="_blank" rel="noopener" style="--i: 8">
+        <img src="github.svg" alt="GitHub"> GitHub
       </a>
 
-      <a class="link" href="https://facebook.com/colinlee.05" target="_blank" rel="noopener">
-        <img src="facebook.svg" alt="Facebook Icon"> Facebook
+      <a class="link" href="https://linkedin.com/in/colinlee05" target="_blank" rel="noopener" style="--i: 9">
+        <img src="linkedin.svg" alt="LinkedIn"> LinkedIn
+      </a>
+
+      <a class="link" href="https://www.snapchat.com/add/colinlee-05" target="_blank" rel="noopener" style="--i: 10">
+        <img src="snapchat.svg" alt="Snapchat"> Snapchat
+      </a>
+
+      <a class="link" href="https://facebook.com/colinlee.05" target="_blank" rel="noopener" style="--i: 11">
+        <img src="facebook.svg" alt="Facebook"> Facebook
       </a>
     </div>
 
-    <footer>© 2025 - 2026 Colin Lee</footer>
+    <footer>
+        © <span id="year"></span> Colin Lee
+    </footer>
   </div>
+
+  <script>
+    // 1. Auto-update Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 2. Music Player Logic
+    const player = document.getElementById('musicPlayer');
+    const audio = document.getElementById('audioTrack');
+    const playBtn = document.getElementById('playBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+
+    let isPlaying = false;
+
+    player.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            player.classList.remove('playing');
+        } else {
+            audio.play();
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+            player.classList.add('playing');
+        }
+        isPlaying = !isPlaying;
+    });
+
+    // 3. Discord Copy Logic
+    function copyDiscord(e) {
+        e.preventDefault();
+        navigator.clipboard.writeText("wtfzeon");
+        alert("Discord username 'wtfzeon' copied to clipboard!");
+    }
+  </script>
 
 </body>
 </html>
