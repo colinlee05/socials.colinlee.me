@@ -135,6 +135,11 @@ h1 {
   box-shadow: 0 12px 30px rgba(124,108,255,0.35);
 }
 
+.link:active {
+  transform: scale(0.97);
+  transition: transform 0.15s ease;
+}
+
 /* Footer */
 footer {
   margin-top: 30px;
