@@ -22,14 +22,26 @@
 
   <div class="particles"></div>
 
-  <div id="lyric-layer"></div>
-
   <div class="container">
 
     <div class="initials">CL</div>
 
     <h1>Colin Lee</h1>
-    <p class="bio">Student & Developer based in Baton Rouge.</p>
+    
+    <div class="location-container">
+        <div class="status-dot"></div>
+        <span class="location-text">Baton Rouge, LA • <span id="local-time">--:-- AM</span></span>
+    </div>
+
+    <p class="bio">Student & Developer building cool things online.</p>
+
+    <div class="tech-stack">
+        <span>Python</span>
+        <span>JavaScript</span>
+        <span>React</span>
+        <span>CSS</span>
+        <span>Git</span>
+    </div>
 
     <div class="music-player" id="musicPlayer">
         <div class="play-icon" id="playBtn">
@@ -60,7 +72,7 @@
       </a>
 
       <a class="link" href="#" onclick="copyDiscord(event)" style="--i: 4">
-        <img src="discord.svg" alt="Discord"> Discord (wtfzeon)
+        <img src="discord.svg" alt="Discord"> Discord
       </a>
 
       <a class="link" href="https://youtube.com/@colinlee05" target="_blank" rel="noopener" style="--i: 5">
@@ -72,7 +84,7 @@
       </a>
 
       <a class="link" href="https://x.com/colinlee05" target="_blank" rel="noopener" style="--i: 7">
-        <img src="x.svg" alt="X"> X (Twitter)
+        <img src="x.svg" alt="X"> X
       </a>
 
       <a class="link" href="https://github.com/colinlee05" target="_blank" rel="noopener" style="--i: 8">
@@ -101,72 +113,27 @@
     // 1. Auto-update Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 2. Music Player Logic
+    // 2. Live Time Update
+    function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        document.getElementById('local-time').textContent = timeString;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // 3. Music Player Logic (Simplified - No Lyrics)
     const player = document.getElementById('musicPlayer');
     const audio = document.getElementById('audioTrack');
     const playIcon = document.getElementById('playIcon');
     const pauseIcon = document.getElementById('pauseIcon');
-    const lyricLayer = document.getElementById('lyric-layer');
 
     let isPlaying = false;
-    let nextLyricIndex = 0;
 
-    // --- FULL LYRIC MAP (LORDE - RIBS 4:18 VERSION) ---
-    const lyrics = [
-      // Verse 1
-      { time: 50, speed: 300, text: "The drink you spilt all over me" },
-      { time: 54.5, speed: 300, text: "Lover's Spit left on repeat" },
-      { time: 59, speed: 250, text: "My mom and dad let me stay home" },
-      { time: 64, speed: 250, text: "It drives you crazy getting old" },
-      
-      { time: 77.5, speed: 300, text: "We can talk it so good" },
-      { time: 82, speed: 300, text: "We can make it so divine" },
-      { time: 86.5, speed: 300, text: "We can talk it good" },
-      { time: 90.5, speed: 250, text: "How you wish it would be all the time" },
-      
-      { time: 95.5, speed: 300, text: "The drink you spilt all over me" },
-      { time: 100, speed: 300, text: "Lover's Spit left on repeat" },
-      { time: 104.5, speed: 250, text: "My mom and dad let me stay home" },
-      { time: 109, speed: 250, text: "It drives you crazy getting old" },
-      
-      // Chorus 1
-      { time: 119, speed: 350, text: "And I've never felt more alone" },
-      { time: 123.5, speed: 350, text: "It feels so scary getting old" },
-
-      // Verse 2 / Bridge buildup
-      { time: 146, speed: 300, text: "I want it back" },
-      { time: 148, speed: 300, text: "The minds we had" },
-      { time: 150.5, speed: 200, text: "It's not enough to feel the lack" },
-      { time: 155, speed: 200, text: "I want it back I want it back" },
-      { time: 159.5, speed: 200, text: "The minds we had the minds we had" },
-      
-      // The Big Repetitive Climax
-      { time: 164, speed: 250, text: "You're the only friend I need" },
-      { time: 168.5, speed: 250, text: "Sharing beds like little kids" },
-      { time: 173, speed: 250, text: "And laughing 'til our ribs get tough" },
-      { time: 177.5, speed: 250, text: "But that will never be enough" },
-
-      { time: 182, speed: 250, text: "You're the only friend I need" },
-      { time: 186.5, speed: 250, text: "Sharing beds like little kids" },
-      { time: 191, speed: 250, text: "And laughing 'til our ribs get tough" },
-      { time: 195.5, speed: 250, text: "But that will never be enough" },
-
-      { time: 200, speed: 250, text: "You're the only friend I need" },
-      { time: 204.5, speed: 250, text: "Sharing beds like little kids" },
-      { time: 209, speed: 250, text: "And laughing 'til our ribs get tough" },
-      { time: 213.5, speed: 250, text: "But that will never be enough" },
-
-      { time: 218, speed: 250, text: "You're the only friend I need" },
-      { time: 222.5, speed: 250, text: "Sharing beds like little kids" },
-      { time: 227, speed: 250, text: "And laughing 'til our ribs get tough" },
-      { time: 231.5, speed: 250, text: "But that will never be enough" },
-
-      // Outro Fade
-      { time: 236, speed: 300, text: "But that will never be enough" },
-      { time: 240, speed: 350, text: "But that will never be enough" }
-    ];
-
-    // Toggle Play/Pause
     player.addEventListener('click', () => {
         if (isPlaying) {
             audio.pause();
@@ -182,71 +149,7 @@
         isPlaying = !isPlaying;
     });
 
-    // Time Update Engine
-    audio.addEventListener('timeupdate', () => {
-      const currentTime = audio.currentTime;
-
-      // Check if next lyric is ready to spawn
-      if (nextLyricIndex < lyrics.length && currentTime >= lyrics[nextLyricIndex].time) {
-        spawnSentence(lyrics[nextLyricIndex]);
-        nextLyricIndex++;
-      }
-      
-      // Reset logic for loop
-      if (currentTime < 2) {
-        nextLyricIndex = 0;
-      }
-    });
-
-    function spawnSentence(lyricObj) {
-        const words = lyricObj.text.split(" ");
-        let delay = 0;
-
-        // Decide which side (Left or Right) this whole sentence will appear on
-        const side = Math.random() < 0.5 ? 'left' : 'right';
-
-        words.forEach((word) => {
-            setTimeout(() => {
-                spawnWord(word, side);
-            }, delay);
-            delay += lyricObj.speed; 
-        });
-    }
-
-    function spawnWord(text, side) {
-      const el = document.createElement('div');
-      el.innerText = text;
-      el.className = 'flying-lyric';
-
-      // Safe Zones: Left (2-13%) or Right (85-98%)
-      let randomLeft;
-      if (side === 'left') {
-          randomLeft = Math.floor(Math.random() * 12) + 2; 
-      } else {
-          randomLeft = Math.floor(Math.random() * 13) + 85; 
-      }
-
-      // Vertical (10-90%)
-      const randomTop = Math.floor(Math.random() * 80) + 10; 
-      
-      // Styling
-      const randomScale = 0.8 + Math.random() * 0.4;
-      const randomRot = Math.floor(Math.random() * 30) - 15;
-
-      el.style.top = randomTop + '%';
-      el.style.left = randomLeft + '%';
-      el.style.fontSize = (1.4 * randomScale) + 'rem';
-      el.style.transform = `rotate(${randomRot}deg)`;
-
-      lyricLayer.appendChild(el);
-
-      // Cleanup
-      setTimeout(() => {
-        el.remove();
-      }, 4000);
-    }
-
-    // 3. Discord Copy
+    // 4. Discord Copy
     function copyDiscord(e) {
         e.preventDefault();
         navigator.clipboard.writeText("wtfzeon");
