@@ -244,40 +244,44 @@ footer {
 
 .flying-lyric {
   position: absolute;
-  color: rgba(255, 255, 255, 0.15); /* Ghostly white */
+  color: rgba(255, 255, 255, 0.25); /* Slightly more visible */
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800; /* Thicker font for impact */
   white-space: nowrap;
-  text-shadow: 0 0 15px rgba(124, 108, 255, 0.5); /* Purple glow */
-  animation: lyricPopFloat 5s ease-out forwards;
+  text-shadow: 0 0 20px rgba(124, 108, 255, 0.8);
+  opacity: 0;
+  animation: wordPop 4s ease-out forwards;
 }
 
-@keyframes lyricPopFloat {
+@keyframes wordPop {
   0% {
     opacity: 0;
-    transform: scale(0.5) translateY(40px) rotate(-2deg);
+    transform: scale(0.2) translateY(50px);
     filter: blur(10px);
   }
   10% {
     opacity: 1;
-    transform: scale(1.1) translateY(0) rotate(0deg);
+    transform: scale(1.2) translateY(0); /* Hard Pop */
     filter: blur(0px);
   }
   20% {
     transform: scale(1);
   }
   80% {
-    opacity: 0.8;
+    opacity: 0.6;
+    transform: translateY(-20px);
   }
   100% {
     opacity: 0;
-    transform: translateY(-100px) scale(1.1);
-    filter: blur(8px);
+    transform: translateY(-100px) scale(0.8);
+    filter: blur(10px);
   }
 }
 
+/* Mobile Adjustment: Hide lyrics on very small screens or move them to corners */
 @media (max-width: 600px) {
   .flying-lyric {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.15); /* Fainter on mobile */
   }
 }
